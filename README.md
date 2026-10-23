@@ -1,5 +1,25 @@
 # squeeze
 
+**Shrink JSON and logs before they hit the context window.** Zero dependencies, zero config, single file.
+
+```
+JSON sample:  15,755 chars → 5,025 chars   (60.4% smaller)
+Log sample:   20,739 chars → 2,343 chars   (87.1% smaller)
+```
+
+One rule that is not configurable: **error lines are never dropped.** A `FATAL` buried on line 200 of a 401-line log survives every truncation pass. The output always states exactly what was removed, so nothing disappears silently.
+
+```bash
+python squeeze.py big_response.json --stats
+cat app.log | python squeeze.py -
+```
+
+No model download, no server, no changes to your config files.
+
+<sub>中文说明见下方 · Chinese documentation below</sub>
+
+---
+
 把喂给 LLM 之前的 JSON / 日志 / 文本压小。**零依赖、零配置、单文件。**
 
 不下载模型，不开端口，不改你任何配置文件。一个 `python squeeze.py` 就完事。
